@@ -15,39 +15,55 @@ public class ImageProcessingGUI extends JFrame {
     private ImageEditor imageEditor;
 
     public ImageProcessingGUI() {
-        setTitle("Image Processing Application");
-        setSize(600, 800);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
+    this.setTitle("Image Processing Application");
+    this.setSize(600, 800);
+    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    this.setLayout(new BorderLayout());
+    this.getContentPane().setBackground(new Color(0x123456));
 
-        imageLabel = new JLabel();
-       imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-       imageLabel.setPreferredSize(new Dimension(400, 400));
-        add(new JScrollPane(imageLabel), BorderLayout.CENTER);
+    // Configure image label
+    imageLabel = new JLabel();
+    imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+    imageLabel.setPreferredSize(new Dimension(400, 400));
+    imageLabel.setOpaque(false); // Make the label transparent
 
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout());
+    // Configure JScrollPane
+    JScrollPane scrollPane = new JScrollPane(imageLabel);
+    scrollPane.getViewport().setOpaque(false); // Make viewport transparent
+    scrollPane.setOpaque(false); // Make scroll pane transparent
+    scrollPane.setBackground(new Color(0x123456)); // Match background color
 
-        JButton loadButton = new JButton("Load Image");
-        loadButton.addActionListener(new LoadImageAction());
+    // Add the scroll pane
+    add(scrollPane, BorderLayout.CENTER);
 
-        JButton grayscaleButton = new JButton("Grayscale");
-        grayscaleButton.addActionListener(new ApplyFilterAction("grayscale"));
+    // Configure button panel
+    JPanel buttonPanel = new JPanel();
+    buttonPanel.setLayout(new FlowLayout());
+    buttonPanel.setBackground(new Color(0x345678)); // Set a distinct background for the panel
 
-        JButton rotateButton = new JButton("Rotate 90°");
-        rotateButton.addActionListener(new ApplyTransformationAction("rotate"));
+    JButton loadButton = new JButton("Load Image");
+    loadButton.addActionListener(new LoadImageAction());
 
-        JButton saveButton = new JButton("Save Image");
-        saveButton.addActionListener(new SaveImageAction());
+    JButton grayscaleButton = new JButton("Grayscale");
+    grayscaleButton.addActionListener(new ApplyFilterAction("grayscale"));
 
-        buttonPanel.add(loadButton);
-        buttonPanel.add(grayscaleButton);
-        buttonPanel.add(rotateButton);
-        buttonPanel.add(saveButton);
-        add(buttonPanel, BorderLayout.SOUTH);
+    JButton rotateButton = new JButton("Rotate 90°");
+    rotateButton.addActionListener(new ApplyTransformationAction("rotate"));
 
-        setVisible(true);
-    }
+    JButton saveButton = new JButton("Save Image");
+    saveButton.addActionListener(new SaveImageAction());
+
+    buttonPanel.add(loadButton);
+    buttonPanel.add(grayscaleButton);
+    buttonPanel.add(rotateButton);
+    buttonPanel.add(saveButton);
+
+    add(buttonPanel, BorderLayout.SOUTH);
+
+    // Display the frame
+    setVisible(true);
+}
+
 
     // Inner classes for handling button actions
     private class LoadImageAction implements ActionListener {
@@ -165,7 +181,7 @@ public class ImageProcessingGUI extends JFrame {
     Image scaledImage = originalImage.getScaledInstance(targetWidth, targetHeight, Image.SCALE_SMOOTH);
     BufferedImage resizedImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_ARGB);
 
-    Graphics2D g2d = resizedImage.createGraphics();
+   Graphics2D g2d = resizedImage.createGraphics();
     g2d.drawImage(scaledImage, 0, 0, null);
     g2d.dispose();
 

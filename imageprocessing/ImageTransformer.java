@@ -17,5 +17,4 @@ public class ImageTransformer {
         return rotatedImage;
     }
 
-    // Add more transformation methods as needed
 }

@@ -11,8 +11,6 @@ public class ImageProcessingTask {
         ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         executor.submit(task);
         executor.shutdown();
-        while (!executor.isTerminated()) {
-            // Wait for task completion
-        }
+       
     }
 }
